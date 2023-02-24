@@ -50,13 +50,15 @@ class LocationService: Service() {
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         locationClient
-            .getLocationUpdates(10000L)
+            .getLocationUpdates(1000L)
             .catch { e -> e.printStackTrace() }
             .onEach { location ->
-                val lat = location.latitude.toString().takeLast(3)
-                val long = location.longitude.toString().takeLast(3)
+                val lat = location.latitude.toString()
+                val long = location.longitude.toString()
+                val bearing = location.bearing.toString()
+                val speed = location.speed.toString()
                 val updatedNotification = notification.setContentText(
-                    "Location: ($lat, $long)"
+                    "Location: ($lat, $long, $bearing, $speed)"
                 )
                 notificationManager.notify(1, updatedNotification.build())
             }
@@ -66,7 +68,7 @@ class LocationService: Service() {
     }
 
     private fun stop() {
-        stopForeground(true)
+        stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
 

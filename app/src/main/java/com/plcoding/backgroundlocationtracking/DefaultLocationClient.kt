@@ -33,9 +33,7 @@ class DefaultLocationClient(
                 throw LocationClient.LocationException("GPS is disabled")
             }
 
-            val request = LocationRequest.create()
-                .setInterval(interval)
-                .setFastestInterval(interval)
+            val request = LocationRequest.Builder(interval)
 
             val locationCallback = object : LocationCallback() {
                 override fun onLocationResult(result: LocationResult) {
@@ -47,7 +45,7 @@ class DefaultLocationClient(
             }
 
             client.requestLocationUpdates(
-                request,
+                request.build(),
                 locationCallback,
                 Looper.getMainLooper()
             )
