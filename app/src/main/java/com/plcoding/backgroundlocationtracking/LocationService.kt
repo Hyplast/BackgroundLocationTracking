@@ -57,8 +57,9 @@ class LocationService: Service() {
                 val long = location.longitude.toString()
                 val bearing = location.bearing.toString()
                 val speed = location.speed.toString()
+                val altitude = location.altitude.toString()
                 val updatedNotification = notification.setContentText(
-                    "Location: ($lat, $long, $bearing, $speed)"
+                    "Location: ($lat, $long, $bearing, $speed, $altitude)"
                 )
                 notificationManager.notify(1, updatedNotification.build())
             }
