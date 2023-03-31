@@ -62,4 +62,13 @@ dependencies {
 
     // Location Services
     implementation 'com.google.android.gms:play-services-location:21.0.1'
+
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation("com.squareup.retrofit2:converter-scalars:2.9.0")
+    //implementation 'javax.xml.bind:jaxb-api:2.4.0-b180830.0359'
+    //implementation 'com.sun.xml.bind:jaxb-core:4.0.2'
+    //implementation 'com.sun.xml.bind:jaxb-impl:4.0.2'
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
 }
