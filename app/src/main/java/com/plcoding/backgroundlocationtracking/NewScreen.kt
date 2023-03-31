@@ -31,9 +31,9 @@ fun NewScreen() {
                 action = LocationService.ACTION_START
                 applicationContext.startService(this)
             }
-            GlobalScope.launch {
-                fileMain()
-            }
+            //GlobalScope.launch {
+            //    fileMain()
+            //}
         }) {
             Text(text = "Start")
         }
@@ -44,6 +44,7 @@ fun NewScreen() {
                 applicationContext.startService(this)
             }
         }) {
+            //Text(text = LocationService.)
             Text(text = "Stop")
         }
     }

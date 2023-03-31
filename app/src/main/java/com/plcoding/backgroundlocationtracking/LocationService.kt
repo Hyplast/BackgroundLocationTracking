@@ -11,14 +11,14 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.*
 
 class LocationService: Service() {
 
     private val serviceScope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private lateinit var locationClient: LocationClient
+    private val _locationFlow = MutableSharedFlow<String>()
+    val locationFlow: Flow<String> = _locationFlow.asSharedFlow()
 
     override fun onBind(p0: Intent?): IBinder? {
         return null
@@ -58,6 +58,8 @@ class LocationService: Service() {
                 val bearing = location.bearing.toString()
                 val speed = location.speed.toString()
                 val altitude = location.altitude.toString()
+                val locationValues = "Location: ($lat, $long, $bearing, $speed, $altitude)"
+                sendLocation(locationValues)
                 val updatedNotification = notification.setContentText(
                     "Location: ($lat, $long, $bearing, $speed, $altitude)"
                 )
@@ -66,6 +68,10 @@ class LocationService: Service() {
             .launchIn(serviceScope)
 
         startForeground(1, notification.build())
+    }
+
+    private fun sendLocation(locationValues: String) {
+        _locationFlow.tryEmit(locationValues)
     }
 
     private fun stop() {

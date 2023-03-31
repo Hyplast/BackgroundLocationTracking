@@ -102,13 +102,13 @@ fun fileMain() = runBlocking {
 
 
             if (parcelFileDesc != null) {
-                FileOutputStream(parcelFileDesc!!.fileDescriptor).use {
+                FileOutputStream(parcelFileDesc.fileDescriptor).use {
                     var prevFlow1Value: Int? = null
                     combinedFlow.collect { (value1, value2) ->
                         if (writeToFile) {
                             if (prevFlow1Value != value1) {
                                 withContext(Dispatchers.IO) {
-                                    it.write("${clock.instant()} - Value1: $value1, Value2: $value2\n".toByteArray())
+                                    it.write("${clock.instant()} - $value1,$value2\n".toByteArray())
                                 }
                                 //outputStream?.write("Value1: $value1, Value2: $value2\n".toByteArray())
                                 prevFlow1Value = value1
